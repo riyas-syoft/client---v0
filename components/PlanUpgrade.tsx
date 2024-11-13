@@ -20,14 +20,14 @@ const PricingUpgrade = ({toggleUpgradePlan} : any) => {
   const selectedPlan = selectedPlanIndex !== null ? planData[selectedPlanIndex] : null;
 
   return (
-    <section className="flex flex-col items-start py-7 pr-14 pl-6 text-black bg-white max-w-[550px] max-md:px-5">
+    <section className=" flex flex-col items-start md:py-7 md:pr-14 pl-6 text-black  bg-white  md:max-w-[550px] max-md:px-5">
       <header>
         <h1 className="text-lg font-bold text-start">Upgrade Plan</h1>
         <p className="mt-3 text-sm">You're currently on the vO Free plan.</p>
       </header>
 
       {/* Display the row of plan names */}
-      <div className="flex gap-5 justify-between items-center w-full max-w-full mt-7 bg-gray-50 p-4 border border-gray-200 rounded-md">
+      <div className="flex gap-5 justify-between items-center w-full max-w-full mt-7  bg-gray-50 p-4 border border-gray-200 rounded-md">
         {planData.map((plan, index) => (
           <PlanOption 
             key={index} 

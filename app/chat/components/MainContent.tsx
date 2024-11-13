@@ -1,32 +1,46 @@
 "use client";
 import PricingUpgrade from "@/components/PlanUpgrade";
 import Sidebar from "@/components/Sidebar";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 
-export const SearchForm: React.FC = () => {
-  const [searchTerm,setSeachTerm] = useState('');
+export const SearchForm = ({ onAddQuestion,status,placeholder }:any) => {
+  const [searchTerm, setSearchTerm] = useState('');
+  const router = useRouter();
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchTerm.trim()) {
+      onAddQuestion(searchTerm);  // Add question to history without altering form UI
+      router.push(`/chat/1`);     // Navigate to the dynamic route
+      setSearchTerm('');          // Clear input after submit
+    }
+  };
+
   return (
-    <form className="flex flex-col justify-center self-stretch  mt-5 w-full text-sm leading-none whitespace-nowrap bg-white rounded-xl border border-solid border-gray-500 border-opacity-80 text-zinc-500 max-md:max-w-full">
+    <form onSubmit={handleSubmit} className="flex flex-col justify-center self-stretch mt-5 w-full text-sm leading-none whitespace-nowrap bg-white rounded-xl border border-solid border-gray-500 border-opacity-80 text-zinc-500 max-md:max-w-full">
       <input
-        type="text" onChange={(e)=>setSeachTerm(e.target.value)}
+        type="text"
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
         className="focus:outline-none focus:text-black focus:border-transparent p-3 rounded-t-xl bg-white text-black"
-        placeholder="Ask vO a question..."
+        placeholder= {`${placeholder ? placeholder : "Ask vO a question..."}`}
       />
       <div className="flex flex-wrap gap-5 justify-between items-start px-3 pt-5 pb-3 w-full bg-white rounded-b-xl max-md:max-w-full">
-        <div className="flex gap-2 ">
+        <div className="flex gap-2">
           <label className="cursor-pointer">
-            {/* Attach Icon */}
             <img
               loading="lazy"
               src="https://cdn.builder.io/api/v1/image/assets/TEMP/0e7bf1fc0cf4e79533d2a8e1351e5f614227b26f363f0b8f9161040ea59c4a13?apiKey=2a27755d9b58497580a442835654a8d8&"
               alt=""
               className="object-contain shrink-0 w-8 rounded-lg aspect-square"
             />
-            {/* Hidden File Input */}
             <input type="file" onChange={() => {}} className="hidden" />
           </label>
 
-          <button
+        {
+          !status && (
+            <button
             type="button"
             className="flex gap-2 px-2.5 py-2 rounded-lg border border-dashed border-black border-opacity-10"
           >
@@ -38,6 +52,8 @@ export const SearchForm: React.FC = () => {
             />
             <span>Project</span>
           </button>
+          )
+        }
         </div>
         <button type="submit" className={`${searchTerm.length > 0 ? 'bg-black' : 'bg-gray-200'} p-1 border border-gray-300 rounded-md`} aria-label="Submit search">
           <svg
@@ -57,18 +73,32 @@ export const SearchForm: React.FC = () => {
 
 const MainContent: React.FC = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [profileOpen, setProfiileOpen] = useState(false);
+  const [profileOpen, setProfileOpen] = useState(false);
   const [upgradeProfile, setUpgradeProfile] = useState(false);
+  const [questionHistory, setQuestionHistory] = useState<string[]>([]);
+
+  useEffect(() => {
+    // Load question history from localStorage on initial render
+    const storedHistory = JSON.parse(localStorage.getItem("questionHistory") || "[]");
+    setQuestionHistory(storedHistory);
+  }, []);
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
   const toggleProfileBar = () => {
-    setProfiileOpen(!profileOpen);
+    setProfileOpen(!profileOpen);
   };
-  const toggleUpgradePlan: any = () => {
+  const toggleUpgradePlan = () => {
     setUpgradeProfile(!upgradeProfile);
   };
+
+  const addQuestionToHistory = (question: string) => {
+    const updatedHistory = [...questionHistory, question];
+    setQuestionHistory(updatedHistory);
+    localStorage.setItem("questionHistory", JSON.stringify(updatedHistory)); // Store in localStorage
+  };
+
   return (
     <main
       onClick={() => {
@@ -76,7 +106,7 @@ const MainContent: React.FC = () => {
           profileOpen && toggleProfileBar(), isSidebarOpen && toggleSidebar()
         );
       }}
-      className="flex relative flex-col justify-center items-center px-20 mt-56 max-w-full text-center h-full text-zinc-900 w-[1283px] max-md:px-5 max-md:py-28 max-md:mt-10"
+      className={`flex relative flex-col justify-center ${isSidebarOpen && "lg:ml-28"} items-center px-20 mt-32 max-w-full text-center h-full text-zinc-900 w-[1283px] max-md:px-5 max-md:py-28 max-md:mt-10`}
     >
       <Sidebar
         isSidebarOpen={isSidebarOpen}
@@ -84,16 +114,13 @@ const MainContent: React.FC = () => {
         profileOpen={profileOpen}
         toggleProfileBar={toggleProfileBar}
         toggleUpgradePlan={toggleUpgradePlan}
+        questionHistory={questionHistory}
       />
       <div
-        onClick={() => {
-          return (
-            profileOpen && toggleProfileBar(), isSidebarOpen && toggleSidebar()
-          );
-        }}
-        className="flex relative flex-col items-center mb-0 max-w-full w-[736px] max-md:mb-2.5"
+        onClick={(e) => e.stopPropagation()}
+        className={`flex relative  flex-col items-center mb-0 max-w-full w-[736px] max-md:mb-2.5`}
       >
-        <h1 className="text-5xl text-black   font-semibold tracking-tighter leading-loose max-md:max-w-full max-md:text-3xl">
+        <h1 className="text-5xl text-black font-semibold tracking-tighter leading-loose max-md:max-w-full max-md:text-3xl">
           What can I help you ship?
         </h1>
         {upgradeProfile && (
@@ -109,8 +136,8 @@ const MainContent: React.FC = () => {
             </div>
           </div>
         )}
-        <SearchForm />
-        <SuggestionButtons />
+        <SearchForm onAddQuestion={addQuestionToHistory} />
+        <SuggestionButtons  />
       </div>
     </main>
   );
