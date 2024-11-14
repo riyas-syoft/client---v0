@@ -56,10 +56,10 @@ export const BluetoothConnectionGuide: React.FC<
                   setHeading("Share Chat")
                 );
               }}
-              className="text-sm ml-2 flex cursor-pointer  font-extralight pt-1  rounded-md bg-white md:border border-gray-500"
+              className="text-sm ml-2 flex cursor-pointer  font-extralight pt-1  rounded-2xl bg-white md:border border-gray-300"
             >
               <svg
-                className="w-6 h-6 text-gray-800"
+                className="w-6 h-6 text-gray-800 lg:ml-2"
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
                 width="4"
@@ -231,8 +231,8 @@ export const BluetoothConnectionGuide: React.FC<
               alt="profile icon"
             />
             <h1 className="self-start text-md mt-2">{title}</h1>
-          </div>
-          <p className="mt-8 leading-5 tex-sm max-md:max-w-full">{subtitle}</p>
+          </div> 
+           <p className="mt-8 leading-5 tex-sm max-md:max-w-full">{subtitle}</p>
           <StepList steps={steps} />
         </section>
         {/* <div className="self-end mt-96 max-md:mt-10">1</div> */}

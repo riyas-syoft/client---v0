@@ -124,8 +124,11 @@ const Sidebar = ({
                 </svg>
               ) : (
                 <div className="ml-2">
-                  <div className="border cursor-pointer border-gray-300 bg-white p-1 shadow-lg text-black rounded-2xl">
-                    New Chat
+                  <div
+                    onClick={() => navigateToChat()}
+                    className="border cursor-pointer border-gray-300 bg-white p-1 shadow-lg text-black rounded-2xl"
+                  >
+                    <p> New Chat</p>
                   </div>
                   <h1 className="text-start mt-5 text-sm text-gray-600">
                     Recent Chats

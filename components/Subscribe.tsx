@@ -17,7 +17,7 @@ const SubscribeModal = ({ setIsOpen, isOpen }: any) => {
             <div className="relative rounded-lg  bg-white">
               {/* Modal header */}
               <div className="flex items-center justify-between  rounded-t ">
-                <h3 className="text-xl font-semibold text-gray-900 ">
+                <h3 className="text-xl font-semibold ml-3 text-gray-900 ">
                   Subscribe to Premium
                 </h3>
                 <button
