@@ -34,23 +34,32 @@ export const BluetoothConnectionGuide: React.FC<
         } flex   mt-10 lg:mt-0 text-center  flex-wrap gap-5 justify-between  md:justify-center lg:justify-between self-stretch w-full max-md:max-w-full`}
       >
         <nav className="flex gap-1 md:gap-5 self-start w-full mr-5 md:mr-20 md:justify-between">
-          <div className="flex gap-1 md:gap-5">
-            <span className="text-sm md:text-md cursor-pointer" onClick={() => {
-                                return (
-                                  toggleModal(),
-                                  setDesc("Bluetooth connection Windows"),
-                                  setHeading("Rename Chat")
-                                );
-                              }}>
-              Bluetooth connection Windows
-            </span>
-            <span onClick={()=>{
+          <div className="flex  md:gap-5">
+            <span
+              className="text-sm md:text-md cursor-pointer"
+              onClick={() => {
                 return (
-                    toggleModal(),setDesc("Private or Public"),setHeading("Share Chat")
-                )
-            }} className="text-sm flex cursor-pointer  font-extralight pt-1  rounded-md bg-white md:border border-gray-500">
+                  toggleModal(),
+                  setDesc("Bluetooth connection Windows"),
+                  setHeading("Rename Chat")
+                );
+              }}
+            >
+              <span className="hidden lg:flex">Bluetooth connection windows</span>
+              <span className="flex lg:hidden">Bluetooth connection</span>
+            </span>
+            <span
+              onClick={() => {
+                return (
+                  toggleModal(),
+                  setDesc("Private or Public"),
+                  setHeading("Share Chat")
+                );
+              }}
+              className="text-sm ml-2 flex cursor-pointer  font-extralight pt-1  rounded-md bg-white md:border border-gray-500"
+            >
               <svg
-                className="w-6 h-6 text-gray-800 ml-2"
+                className="w-6 h-6 text-gray-800"
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
                 width="4"
@@ -59,20 +68,23 @@ export const BluetoothConnectionGuide: React.FC<
                 viewBox="0 0 32 32"
               >
                 <path
-                  fill-rule="evenodd"
+                  fillRule="evenodd"
                   d="M8 10V7a4 4 0 1 1 8 0v3h1a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h1Zm2-3a2 2 0 1 1 4 0v3h-4V7Zm2 6a1 1 0 0 1 1 1v3a1 1 0 1 1-2 0v-3a1 1 0 0 1 1-1Z"
-                  clip-rule="evenodd"
+                  clipRule="evenodd"
                 />
               </svg>
-              <span className="mr-5 hidden md:flex">Private</span>
+              <span className="mr-5  hidden md:flex">Private</span>
             </span>
           </div>
           <div className="flex gap-1 lg:gap-5">
-            <svg onClick={()=>{
+            <svg
+              onClick={() => {
                 return (
-                    toggleModal(),setDesc("Private or Public"),setHeading("Share Chat")
-                )
-            }}
+                  toggleModal(),
+                  setDesc("Private or Public"),
+                  setHeading("Share Chat")
+                );
+              }}
               xmlns="http://www.w3.org/2000/svg"
               width="16"
               height="16"

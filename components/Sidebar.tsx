@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
 import CommonModal from "./CommonModal";
+import { useRouter } from "next/navigation";
 
 const Sidebar = ({
   isSidebarOpen,
@@ -17,14 +18,20 @@ const Sidebar = ({
   const [showPopup, setshowPopup] = useState(false);
   const [heading, setHeading] = useState("");
   const [desc, setDesc] = useState("");
+
   const toggleModal = () => {
     setShowModal(!showModal);
   };
   const togglePopup = () => {
     setshowPopup(!showPopup);
   };
+  const router = useRouter();
+
+  const navigateToChat = (index: number = 0) => {
+    router.push(`/chat`);
+  };
   // Truncate and add ellipsis if the text is longer than the max length
-  const truncatedText = (longText: any) =>
+  const truncatedText = (longText: string) =>
     longText.length > maxLength
       ? longText.substring(0, maxLength) + "..."
       : longText;
@@ -98,87 +105,88 @@ const Sidebar = ({
 
           <ul className="pt-4 mt-4 space-y-2 font-medium border-t border-white dark:border-gray-700">
             <li className=" rounded-md">
-              <Link href="/chat">
-                {!isSidebarOpen ? (
-                  <svg
-                    className="w-6 h-6 ml-1"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="black"
-                    viewBox="0 0 24 24"
-                    stroke="black"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M12 4v16M4 12h16"
-                    />
-                  </svg>
-                ) : (
-                  <div className="ml-2">
-                    <div className="border border-gray-300 bg-white p-1 shadow-lg text-black rounded-2xl">
-                      New Chat
-                    </div>
-                    <h1 className="text-start mt-5 text-sm text-gray-600">
-                      Recent Chats
-                    </h1>
-                    {displayedQuestions?.map(
-                      (question: string, index: number) => (
-                        <div className="m-2" key={index}>
-                          <Link
-                            href={`/chat/${index}`}
-                            className="flex justify-between group"
+              {/* <Link href="/chat"> */}
+              {!isSidebarOpen ? (
+                <svg
+                  onClick={() => navigateToChat()}
+                  className="w-6 h-6 ml-1 cursor-pointer"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="black"
+                  viewBox="0 0 24 24"
+                  stroke="black"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M12 4v16M4 12h16"
+                  />
+                </svg>
+              ) : (
+                <div className="ml-2">
+                  <div className="border cursor-pointer border-gray-300 bg-white p-1 shadow-lg text-black rounded-2xl">
+                    New Chat
+                  </div>
+                  <h1 className="text-start mt-5 text-sm text-gray-600">
+                    Recent Chats
+                  </h1>
+                  {displayedQuestions?.map(
+                    (question: string, index: number) => (
+                      <div className="m-2" key={index}>
+                        <Link
+                          href={`/chat/${index}`}
+                          className="flex justify-between group"
+                        >
+                          <h1 className="text-start text-sm text-gray-600">
+                            {truncatedText(question)}
+                          </h1>
+                          <svg
+                            onClick={(e) => {
+                              return (
+                                e.stopPropagation(),
+                                e.preventDefault(),
+                                toggleModal()
+                              );
+                            }}
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="16"
+                            height="16"
+                            fill="currentColor"
+                            className="bi bi-three-dots opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+                            viewBox="0 0 16 16"
                           >
-                            <h1 className="text-start text-sm text-gray-600">
-                              {truncatedText(question)}
-                            </h1>
-                            <svg
-                              onClick={(e) => {
-                                return (
-                                  e.stopPropagation(),
-                                  e.preventDefault(),
-                                  toggleModal()
-                                );
-                              }}
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="16"
-                              height="16"
-                              fill="currentColor"
-                              className="bi bi-three-dots opacity-0 group-hover:opacity-100 transition-opacity duration-200"
-                              viewBox="0 0 16 16"
-                            >
-                              <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3" />
-                            </svg>
-                          </Link>
-                        </div>
-                      )
-                    )}
-
-                    {hasMoreQuestions && (
-                      <div className="mt-4 flex items-start justify-start gap-2 text-gray-500">
-                        <Link href="#">
-                          <button className="flex gap-2 items-start text-sm font-medium">
-                            View All
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="16"
-                              height="16"
-                              fill="currentColor"
-                              className="bi bi-chevron-right mt-1"
-                              viewBox="0 0 20 20"
-                            >
-                              <path
-                                fill-rule="evenodd"
-                                d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708"
-                              />
-                            </svg>
-                          </button>
+                            <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3" />
+                          </svg>
                         </Link>
                       </div>
-                    )}
-                  </div>
-                )}
-              </Link>
+                    )
+                  )}
+
+                  {hasMoreQuestions && (
+                    <div className="mt-4 flex items-start justify-start gap-2 text-gray-500">
+                      <Link href="#">
+                        <button className="flex gap-2 items-start text-sm font-medium">
+                          View All
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="16"
+                            height="16"
+                            fill="currentColor"
+                            className="bi bi-chevron-right mt-1"
+                            viewBox="0 0 20 20"
+                          >
+                            <path
+                              fillRule="evenodd"
+                              d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708"
+                            />
+                          </svg>
+                        </button>
+                      </Link>
+                    </div>
+                  )}
+                </div>
+              )}
+              {/* </Link> */}
             </li>
           </ul>
           <div className="flex flex-col fixed bottom-5 w-full">
@@ -251,9 +259,12 @@ const Sidebar = ({
                       <label
                         htmlFor="job-1"
                         onClick={() => {
-                          return toggleModal(), togglePopup(),
-                          setDesc("Bluetooth connection Windows"),
-                          setHeading("Rename Chat");
+                          return (
+                            toggleModal(),
+                            togglePopup(),
+                            setDesc("Bluetooth connection Windows"),
+                            setHeading("Rename Chat")
+                          );
                         }}
                         className="inline-flex items-center justify-between w-full p-5 text-black bg-white rounded-lg cursor-pointer dark:hover:bg-gray-300 "
                       >
@@ -290,11 +301,14 @@ const Sidebar = ({
                       <label
                         htmlFor="job-3"
                         onClick={() => {
-                          return toggleModal(), togglePopup(),
-                          setDesc(
-                            "The chat will be deleted and removed from your chat history"
-                          ),
-                          setHeading("Delete Chat")
+                          return (
+                            toggleModal(),
+                            togglePopup(),
+                            setDesc(
+                              "The chat will be deleted and removed from your chat history"
+                            ),
+                            setHeading("Delete Chat")
+                          );
                         }}
                         className="inline-flex items-center justify-between w-full p-5 text-black bg-white rounded-lg cursor-pointer dark:hover:bg-gray-300 "
                       >

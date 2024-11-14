@@ -1,17 +1,19 @@
-'use state'
-import React, { useState } from 'react';
+"use state";
+import React from "react";
 
-const CommonModal = ({heading,Desc,toggleModal,showModal}:any) => {  
+const CommonModal = ({ heading, Desc, toggleModal, showModal }: any) => {
   return (
     <>
-
       {/* Modal */}
-      <div onClick={toggleModal}
-        id="default-modal" data-modal-target="default-modal" data-modal-toggle="default-modal"
+      <div
+        onClick={toggleModal}
+        id="default-modal"
+        data-modal-target="default-modal"
+        data-modal-toggle="default-modal"
         tabIndex={-1}
         aria-hidden={!showModal}
         className={`${
-          showModal ? 'flex' : 'hidden'
+          showModal ? "flex" : "hidden"
         } fixed inset-0 z-50 overflow-y-auto overflow-x-hidden justify-center items-center bg-gray-900 bg-opacity-50`}
       >
         <div className="relative p-4 w-full max-w-2xl max-h-full">
@@ -19,17 +21,14 @@ const CommonModal = ({heading,Desc,toggleModal,showModal}:any) => {
           <div className="relative bg-white rounded-lg shadow">
             {/* Modal header */}
             <div className="flex items-center justify-between p-4 md:p-5  dark:border-gray-600">
-              <h3 className="text-xl font-semibold text-gray-900">
-                {heading}
-              </h3>
+              <h3 className="text-xl font-semibold text-gray-900">{heading}</h3>
             </div>
 
             {/* Modal body */}
             <div className="p-2 ml-5">
               <p className="text-start leading-relaxed text-gray-500 dark:text-gray-400">
-              {Desc}
+                {Desc}
               </p>
-
             </div>
 
             {/* Modal footer */}
@@ -39,7 +38,7 @@ const CommonModal = ({heading,Desc,toggleModal,showModal}:any) => {
                 type="button"
                 className="text-black border border-gray-200 bg-white focus:ring-4 focus:outline-none  font-medium rounded-lg text-sm px-5 py-2.5 text-center"
               >
-              Cancel
+                Cancel
               </button>
               <button
                 onClick={toggleModal}

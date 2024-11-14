@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 interface Step {
   title: string;
@@ -20,7 +20,9 @@ export const StepList: React.FC<StepListProps> = ({ steps }) => {
           {step.subSteps && (
             <ol className="mt-5 ml-7 list-decimal">
               {step.subSteps.map((subStep, subIndex) => (
-                <li key={subIndex} className="mt-2.5 text-sm">{subStep}</li>
+                <li key={subIndex} className="mt-2.5 text-sm">
+                  {subStep}
+                </li>
               ))}
             </ol>
           )}
