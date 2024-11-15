@@ -67,7 +67,7 @@ const Sidebar = ({
       <aside
         onClick={() => profileOpen && toggleProfileBar()}
         id="separator-sidebar"
-        className={`fixed top-0 left-0 z-40  h-screen transition-transform ${
+        className={`fixed top-0 left-0 z-[100]  h-screen transition-transform ${
           isSidebarOpen ? "translate-x-0 w-64" : "-translate-x-full w-14"
         } sm:translate-x-0 text-center`}
         aria-label="Sidebar"
@@ -198,7 +198,7 @@ const Sidebar = ({
                 <img
                   src="https://cdn.iconscout.com/icon/premium/png-512-thumb/collapse-2511427-2103355.png?f=webp&w=512"
                   alt="Collapse Icon"
-                  className={`h-6 w-6 ml-2 hidden lg:flex`}
+                  className={`h-6 w-6 ml-2 hidden md:flex`}
                   onClick={toggleSidebar}
                 />
               )}
@@ -338,7 +338,7 @@ const Sidebar = ({
         </>
       )}
       {profileOpen && (
-        <div className="fixed bottom-0 left-0 m-4 max-w-sm z-50">
+        <div className="fixed bottom-0 right-40 lg:w-[20%]  sm:left-0 lg:left-10 m-4 max-w-sm z-[100]">
           <div className="rounded-lg border bg-white px-8 pt-8 pb-5 shadow-lg">
             <p className="text-gray-400 text-start">sample@gmail.com</p>
             <div className="flex gap-2">

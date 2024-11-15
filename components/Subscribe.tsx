@@ -10,7 +10,7 @@ const SubscribeModal = ({ setIsOpen, isOpen }: any) => {
           id="default-modal"
           tabIndex={-1}
           aria-hidden={!isOpen}
-          className=" z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full overflow-y-auto overflow-x-hidden"
+          className=" z-[100] justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full overflow-y-auto overflow-x-hidden"
         >
           <div className="relative  w-full max-w-2xl max-h-full">
             {/* Modal content */}

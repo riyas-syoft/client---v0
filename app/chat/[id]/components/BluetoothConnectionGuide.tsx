@@ -1,7 +1,10 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { StepList } from "./StepList";
 import CommonModal from "@/components/CommonModal";
+import { SearchForm } from "../../components/MainContent";
+import Footer from "../../components/Footer";
+import Link from "next/link";
 
 interface BluetoothConnectionGuideProps {
   title: string;
@@ -25,13 +28,34 @@ export const BluetoothConnectionGuide: React.FC<
   const toggleModal = () => {
     setShowModal(!showModal);
   };
+  const [isDrawerOpen, setDrawerOpen] = useState(false);
+
+ 
+  const toggleDrawer =  ()=> setDrawerOpen(!isDrawerOpen);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(min-width: 1024px)"); // Large screens (lg breakpoint)
+  
+    if (mediaQuery.matches) {
+      const timer = setTimeout(() => {
+        setDrawerOpen(true);
+      }, 1000); // 1-second delay
+  
+      return () => clearTimeout(timer);
+    }
+  
+    // Cleanup for non-matching screens
+    return () => {};
+  }, []);
   return (
-    <article className="p w-full mt-2 text-center h-full flex overflow-hidden flex-col items-center py-2.5 pr-5 pl-2 text-black bg-white justify-center">
+    <article className={`mt-2 text-center h-full ${
+          isSidebarOpen ? "lg:ml-64" : "md:ml-0"
+        }  flex overflow-hidden flex-col  py-2.5 pr-5 pl-2 text-black bg-white justify-center`}>
       <div
         onClick={() => showPopup && setshowPopup(!showPopup)}
         className={`${
-          isSidebarOpen ? "lg:ml-64 ml-10" : "md:ml-20 ml-10"
-        } flex   mt-10 lg:mt-0 text-center  flex-wrap gap-5 justify-between  md:justify-center lg:justify-between self-stretch w-full max-md:max-w-full`}
+          isSidebarOpen ? "lg:ml-54 ml-10" : "md:ml-20 ml-10"
+        } flex   mt-10 lg:mt-0 text-center  flex-wrap gap-5 justify-between  md:justify-center lg:justify-between self-stretch w-full ${isDrawerOpen ? "lg:w-[55%]":"w-full"}  max-md:max-w-full`}
       >
         <nav className="flex gap-1 md:gap-5 self-start w-full mr-5 md:mr-20 md:justify-between">
           <div className="flex  md:gap-5">
@@ -45,7 +69,9 @@ export const BluetoothConnectionGuide: React.FC<
                 );
               }}
             >
-              <span className="hidden lg:flex">Bluetooth connection windows</span>
+              <span className="hidden lg:flex">
+                Bluetooth connection windows
+              </span>
               <span className="flex lg:hidden">Bluetooth connection</span>
             </span>
             <span
@@ -121,7 +147,7 @@ export const BluetoothConnectionGuide: React.FC<
                   aria-hidden={!showPopup}
                   className={`${
                     showPopup ? "block" : "hidden"
-                  } overflow-y-auto overflow-x-hidden mt-14  fixed top-0 right-0 z-50 justify-center items-start w-[250px] h-[calc(100%-1rem)] max-h-full`}
+                  } overflow-y-auto overflow-x-hidden mt-14  fixed top-0 ${isDrawerOpen ? "lg:right-[45%] ":"right-0"}  z-50 justify-center items-start w-[250px] h-[calc(100%-1rem)] max-h-full`}
                 >
                   <div className="relative  w-full max-w-md max-h-full ">
                     <div className="relative bg-white rounded-lg shadow border border-gray-200">
@@ -213,27 +239,65 @@ export const BluetoothConnectionGuide: React.FC<
                 </div>
               </>
             )}
-            <button className="md:hidden p-2 mr-5 bg-black text-sm text-white rounded-md ml-1 mt-[-10px]">
+           <Link href='/chat'>
+           <button className="md:hidden p-2 mr-5 bg-black text-sm text-white rounded-md ml-1 mt-[-10px]">
               New Chat
             </button>
+           </Link>
           </div>
         </nav>
       </div>
-      <main className="flex flex-wrap gap-10 mt-5 p-5 w-full text-md max-w-[650px] max-md:max-w-full">
+      <main className="flex flex-wrap gap-10 mt-5 p-5 w-full h-full text-md  max-md:max-w-full">
         <section
-          className="hide-scrollbar flex flex-col grow shrink-0 basis-0 w-fit max-md:max-w-full overflow-y-auto"
-          style={{ maxHeight: "400px" }} // Set max height to enable scrolling
+          className=" justify-between h-[560px] md:h-[700px] lg:h-[380px] flex w-full flex-col lg:flex-row grow shrink-0 basis-0  max-md:max-w-full "
+           // Set max height to enable scrolling
         >
-          <div className="flex gap-2">
-            <img
-              className={` h-10 w-10  md:flex`}
-              src="https://png.pngtree.com/png-clipart/20200224/original/pngtree-avatar-icon-profile-icon-member-login-vector-isolated-png-image_5247852.jpg"
-              alt="profile icon"
-            />
-            <h1 className="self-start text-md mt-2">{title}</h1>
-          </div> 
-           <p className="mt-8 leading-5 tex-sm max-md:max-w-full">{subtitle}</p>
-          <StepList steps={steps} />
+          <div className={`w-[100%]  ${isDrawerOpen ? "lg:w-[40%]":"lg:w-[80%]"} sm:ml-20 md:ml-28 ${isSidebarOpen ? "lg:ml-14":"lg:ml-20"}  hide-scrollbar overflow-y-auto`}>
+            <div className={`${!isDrawerOpen && "md:w-[80%] lg:ml-[15%]"}`}>
+            <StepList steps={steps} title={title} subtitle={subtitle} />
+            </div>
+            <div className={` fixed bottom-0 justify-center   ${isDrawerOpen ? "md:w-[40%]":"md:w-[60%] ml-5 md:ml-[13%]"}   ${!isSidebarOpen && !isDrawerOpen ? "lg:ml-[200px]":"lg:ml-20"}
+              ${!isSidebarOpen  && isDrawerOpen? "lg:ml-5":"lg:ml-5"} ${isSidebarOpen && isDrawerOpen ? "lg:ml-[0px]":"lg:ml-20"}
+              items-center`}>
+              <SearchForm
+                onAddQuestion={() => {}}
+                status={true}
+                placeholder="Ask a follow up..."
+              />
+              <footer className="mt-2 text-xs text-center  text-gray-500 mb-2">
+                VO may make mistakes. Please use with discretion.
+              </footer>
+            </div>
+
+          <div
+            className={`mt-5 lg:mt-0 lg:fixed  w-[75%] ml-10 bg-gray-200  ${isSidebarOpen ? "lg:w-[30%] ":"lg:w-[42%]" }  lg:top-0 lg:right-0 h-full bg-base-200 p-4 lg:transition-transform lg:duration-300 ${
+              isDrawerOpen ? "lg:translate-x-0" : "lg:translate-x-full"
+            }`}
+          >
+            
+            <button onClick={toggleDrawer} className="hidden lg:flex  text-black font-bold p-2">
+              Close
+            </button>
+            <ul className="menu text-base-content">
+              <li>
+                <a>Sidebar Item 1</a>
+              </li>
+              <li>
+                <a>Sidebar Item 2</a>
+              </li>
+            </ul>
+          </div>
+          </div>
+          {
+          !isDrawerOpen && (
+              <button onClick={toggleDrawer} className="hidden lg:flex text-black font-bold p-2">
+              Open
+            </button>
+          )
+        }
+          {/* <div className="w-[80%] lg:w-[50%] sm:ml-20 md:ml-28 lg:ml-0 overflow-y-auto hide-scrollbar">
+            <CodeBlock code={sampleCode} language="javascript" />
+          </div> */}
         </section>
         {/* <div className="self-end mt-96 max-md:mt-10">1</div> */}
       </main>

@@ -11,8 +11,6 @@ import React, { useEffect, useState } from "react";
 import { BluetoothConnectionGuide } from "./components/BluetoothConnectionGuide";
 import Sidebar from "@/components/Sidebar";
 import PricingUpgrade from "@/components/PlanUpgrade";
-import { SearchForm } from "../components/MainContent";
-import { Footer } from "./components/Footer";
 
 const bluetoothSteps = [
   {
@@ -112,14 +110,7 @@ const App: React.FC = () => {
         steps={bluetoothSteps}
         isSidebarOpen={isSidebarOpen}
       />
-      <div className=" justify-center  lg:w-[50%] md:w-[75%] md:ml-[15%] m-5 lg:ml-[25%] items-center">
-        <SearchForm
-          onAddQuestion={() => {}}
-          status={true}
-          placeholder="Ask a follow up..."
-        />
-      </div>
-      <Footer />
+     
     </main>
   );
 };

@@ -14,7 +14,7 @@ const CommonModal = ({ heading, Desc, toggleModal, showModal }: any) => {
         aria-hidden={!showModal}
         className={`${
           showModal ? "flex" : "hidden"
-        } fixed inset-0 z-50 overflow-y-auto overflow-x-hidden justify-center items-center bg-gray-900 bg-opacity-50`}
+        } fixed inset-0 z-[100] overflow-y-auto overflow-x-hidden justify-center items-center bg-gray-300 bg-opacity-50`}
       >
         <div className="relative p-4 w-full max-w-2xl max-h-full">
           {/* Modal content */}

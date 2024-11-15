@@ -8,11 +8,22 @@ interface Step {
 
 interface StepListProps {
   steps: Step[];
+  title:string;
+  subtitle:string;
 }
 
-export const StepList: React.FC<StepListProps> = ({ steps }) => {
+export const StepList: React.FC<StepListProps> = ({ steps,title,subtitle }) => {
   return (
-    <ol className="flex flex-col items-start px-3 mt-5 max-md:max-w-full list-decimal">
+    <ol className="flex flex-col  items-start px-3 max-md:max-w-full list-decimal">
+      <div className="flex gap-2">
+            <img
+              className={` h-10 w-10  md:flex`}
+              src="https://png.pngtree.com/png-clipart/20200224/original/pngtree-avatar-icon-profile-icon-member-login-vector-isolated-png-image_5247852.jpg"
+              alt="profile icon"
+            />
+            <h1 className="self-start text-md mt-2">{title}</h1>
+          </div>
+          <p className="mt-8 leading-5 tex-sm max-md:max-w-full">{subtitle}</p>
       {steps.map((step, index) => (
         <li key={index} className="mt-5 ml-5 max-md:ml-2.5">
           <h2 className="text-sm leading-none">{step.title}</h2>

@@ -21,7 +21,7 @@ const Footer: React.FC = () => {
   ];
 
   return (
-    <footer className="fixed bottom-0 left-0 right-0 flex flex-wrap lg:flex-row justify-center gap-1 mt-10 max-w-full text-xs text-black w-full py-4">
+    <footer className="fixed bottom-0 left-0   right-0 flex flex-wrap  lg:flex-row justify-center  gap-1 mt-10 max-w-full text-xs text-black w-full py-4">
       {links.map((link, index) => (
         <React.Fragment key={index}>
           {link.text === "Vercel" ? (
